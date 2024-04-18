@@ -34,6 +34,9 @@ def logoutUser(request):
     return redirect("/")
 
 def registerUser(request):
+    if request.user.is_authenticated:
+        return redirect("index")
+    
     if request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")

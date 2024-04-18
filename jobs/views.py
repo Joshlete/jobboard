@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import Job
 
 
@@ -20,7 +18,7 @@ def job(request, pk):
     }
     return render(request, "jobs/job.html", context)
 
-
+@login_required(login_url='login')
 def createJob(request):
     if request.method == "POST":
         title = request.POST.get("title")
