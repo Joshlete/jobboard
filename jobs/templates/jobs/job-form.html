@@ -1,0 +1,36 @@
+{% extends 'main.html' %} {% block content %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <ul style="list-style-type: none;">
+            <li>
+                <label>Job Title:</label>
+                <input type="text" name="title" placeholder="Enter Job Title" required/>
+            </li>
+
+            <li>
+                <label>Company Name:</label>
+                <input type="text" name="company" placeholder="Enter Company Name" required/>
+            </li>
+
+            <li>
+                <label>Job Description:</label>
+                <input type="text" name="description" placeholder="Enter Job Description" required/>
+            </li>
+
+            <li>
+                <label>Location:</label>
+                <input type="text" name="location" placeholder="Enter Location" required/>
+            </li>
+
+            <li>
+                <label>Application Deadline:</label>
+                <input type="date" name="deadline" required/>
+            </li>
+            <input type="submit" value="Add Job" />
+        </ul>
+
+    </form>
+</div>
+{% endblock %}
