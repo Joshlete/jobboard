@@ -1,40 +1,8 @@
 from django.shortcuts import render
-
-jobs = [
-    {
-        "id": 1,
-        "title": "Python Developer",
-        "description": "We are looking for a Python developer to join our team.",
-        "salary": 100000,
-    },
-    {
-        "id": 2,
-        "title": "Java Developer",
-        "description": "We are looking for a Java developer to join our team.",
-        "salary": 100000,
-    },
-    {
-        "id": 3,
-        "title": "JavaScript Developer",
-        "description": "We are looking for a JavaScript developer to join our team.",
-        "salary": 100000,
-    },
-    {
-        "id": 4,
-        "title": "React Developer",
-        "description": "We are looking for a React developer to join our team.",
-        "salary": 100000,
-    },
-    {
-        "id": 5,
-        "title": "Django Developer",
-        "description": "We are looking for a Django developer to join our team.",
-        "salary": 100000,
-    },
-]
-
+from .models import Job
 
 def index(request):
+    jobs = Job.objects.all()
     context = {
         "jobs": jobs,
     }
@@ -42,11 +10,7 @@ def index(request):
 
 
 def job(request, pk):
-    job = None
-    for j in jobs:
-        if j["id"] == pk:
-            job = j
-            break
+    job = Job.objects.get(id=pk)
     context = {
         "job": job,
     }

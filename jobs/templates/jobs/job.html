@@ -1,5 +1,12 @@
 {% extends 'main.html' %} {% block content %}
 
-<h1>{{job.title}}</h1>
+<div class="job">
+    <h1>{{job.title}}</h1>
+    <h2>{{job.company}}</h2>
+    <h3>{{job.location}}</h3>
+    <p>{{job.description}}</p>
+    <p>Deadline: {{job.deadline}}</p>
+    <a href="">Apply</a>
+</div>
 
 {% endblock %}
