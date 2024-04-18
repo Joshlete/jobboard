@@ -1,0 +1,18 @@
+{% extends 'main.html' %} {% block content %}
+
+<div>
+    <h2>Jobs</h2>
+    <ul>
+        {% for job in jobs %}
+        <div>
+            <h5>
+                {{job.id}} --
+                <a href="{% url 'job' job.id %}">{{job.title}}</a> -
+                {{job.description}}
+            </h5>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
