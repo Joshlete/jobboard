@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Job
+from .models import Job, JobApplication
 from .forms import JobForm, ApplicationForm
+from django.contrib import messages
+
 
 
 
@@ -10,13 +12,29 @@ def index(request):
     context = {
         "jobs": jobs,
     }
-    return render(request, "jobs/index.html", context)
+    return render(request, "index.html", context)
+
+def profile(request):
+    # get all jobs created by the user
+    jobs = Job.objects.filter(user=request.user)
+    applications = JobApplication.objects.filter(user=request.user)
+    
+    context = {
+        "jobs": jobs,
+        'applications': applications,
+    }
+    return render(request, "profile.html", context)
 
 
 def job(request, pk):
     job = Job.objects.get(id=pk)
+    
+    # check if user has applied to the job
+    has_applied = JobApplication.objects.filter(job=job, user=request.user).exists()
+    
     context = {
         "job": job,
+        "has_applied": has_applied,
     }
     return render(request, "jobs/job.html", context)
 
@@ -60,14 +78,34 @@ def deleteJob(request, pk):
 
 @login_required(login_url='login')
 def jobApplication(request, pk):
+    job = Job.objects.get(id=pk)
+    if JobApplication.objects.filter(job=job, user=request.user).exists():
+        return redirect("index")  # User has already applied
+    
     form = ApplicationForm()
     if request.method == "POST":
         form = ApplicationForm(request.POST)
         if form.is_valid():
             job_application = form.save(commit=False)
-            job_application.job = Job.objects.get(id=pk)
+            job_application.job = job
             job_application.user = request.user
             job_application.save()
             return redirect("index")
     context = {'form': form}
     return render(request, "applications/application-form.html", context)
+
+@login_required(login_url='login')
+def editApplication(request, pk):
+    application = JobApplication.objects.get(id=pk)
+    if application.user != request.user:
+        return redirect("index")
+    
+    form = ApplicationForm(instance=application)
+    if request.method == "POST":
+        form = ApplicationForm(request.POST, instance=application)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")
+    context = {'form': form}
+    return render(request, "applications/application-form.html", context)
+

@@ -1,0 +1,29 @@
+{% extends 'main.html' %} {% block content %}
+
+<h1>Profile</h1>
+<p>Username: {{ user.username }}</p>
+
+<!-- display all jobs -->
+<h2>Jobs</h2>
+{% for job in jobs %}
+<div>
+    <h5>
+        {{job.title}} --
+        <a href="{% url 'update-job' job.id %}">Edit</a>
+        <a href="{% url 'delete-job' job.id %}">Delete</a>
+    </h5>
+</div>
+{% endfor %}
+
+<!-- display all applications -->
+<h2>Applications</h2>
+{% for application in applications %}
+<div>
+    <h5>
+        {{application.job.title}} -- <a
+            href="{% url 'update-application' application.id %}"
+            >Edit</a
+        >
+    </h5>
+</div>
+{% endfor %} {% endblock %}

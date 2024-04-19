@@ -6,10 +6,10 @@
     <h3>{{job.location}}</h3>
     <p>{{job.description}}</p>
     <p>Deadline: {{job.deadline}}</p>
+    {% if not has_applied %}
     <a href="{% url 'register-job' job.id %}">Apply</a>
-    {% if request.user == job.user %}
-        <a href="{% url 'update-job' job.id %}">Edit</a>
-        <a href="{% url 'delete-job' job.id %}">Delete</a>
+    {% else %}
+    <b>Applied</b>
     {% endif %}
 </div>
 
