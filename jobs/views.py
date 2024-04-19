@@ -44,7 +44,10 @@ def createJob(request):
     if request.method == "POST":
         form = JobForm(request.POST)
         if form.is_valid():
-            form.save()
+            job = form.save(commit=False)
+            job.user = request.user  # Set the user of the job to the current user
+            job.available = True
+            job.save()
             return redirect("index")
     context = {"form": form}
     return render(request, "jobs/job-form.html", context)
