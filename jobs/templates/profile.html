@@ -20,10 +20,8 @@
 {% for application in applications %}
 <div>
     <h5>
-        {{application.job.title}} -- <a
-            href="{% url 'update-application' application.id %}"
-            >Edit</a
-        >
+        {{application.job.title}} --
+        <a href="{% url 'update-application' application.id %}">Edit</a>
     </h5>
 </div>
 {% endfor %} {% endblock %}

@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
+
 def loginUser(request):
     if request.method == "POST":
         # Get the username and password from the request's POST data
@@ -33,10 +34,11 @@ def logoutUser(request):
     logout(request)
     return redirect("/")
 
+
 def registerUser(request):
     if request.user.is_authenticated:
         return redirect("index")
-    
+
     if request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")
@@ -55,7 +57,9 @@ def registerUser(request):
                 return redirect("register")
             else:
                 # Create a new user
-                user = User.objects.create_user(username=username, email=email, password=password)
+                user = User.objects.create_user(
+                    username=username, email=email, password=password
+                )
                 user.save()
                 # Log in the user after account creation
                 login(request, user)

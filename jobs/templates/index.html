@@ -1,10 +1,5 @@
 {% extends 'main.html' %} {% block content %}
 
-<!-- say hi to user if logged in -->
-{% if user.is_authenticated %}
-<h2>Hi, {{ user.username }}</h2>
-{% endif %}
-
 <!-- display jobs -->
 <div>
     <ul>
