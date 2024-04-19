@@ -7,6 +7,6 @@ urlpatterns = [
     path("create-job/", views.createJob, name="create-job"),
     path("update-job/<int:pk>", views.updateJob, name="update-job"),
     path("delete-job/<int:pk>", views.deleteJob, name="delete-job"),
-    path("register-job/<int:pk>", views.registerJob, name="register-job"),
+    path("register-job/<int:pk>", views.jobApplication, name="register-job"),
     
 ]

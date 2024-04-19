@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Job
-from .forms import JobForm
+from .forms import JobForm, ApplicationForm
 
 
 
@@ -59,10 +59,15 @@ def deleteJob(request, pk):
     return render(request, "jobs/delete.html", {"job": job})
 
 @login_required(login_url='login')
-def registerJob(request, pk):
-    job = Job.objects.get(id=pk)
-    if job.user != request.user:
-        return redirect("index")
-    
-    job.registered_users.add(request.user)
-    return redirect("index")
+def jobApplication(request, pk):
+    form = ApplicationForm()
+    if request.method == "POST":
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            job_application = form.save(commit=False)
+            job_application.job = Job.objects.get(id=pk)
+            job_application.user = request.user
+            job_application.save()
+            return redirect("index")
+    context = {'form': form}
+    return render(request, "applications/application-form.html", context)
