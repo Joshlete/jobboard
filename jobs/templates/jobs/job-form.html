@@ -1,11 +1,41 @@
-{% extends 'main.html' %} {% block content %}
-<div>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit" />
-        <button type="button" onclick="window.history.back()">Cancel</button>
+{% extends 'main.html' %}
+{% block content %}
 
+<div class="container mt-5">
+    <h2 class="mb-4">Job Form</h2>
+
+    <!-- Job application form -->
+    <form method="POST" action="" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="mb-3">
+            <!-- Field label -->
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field.errors }}
+
+            <!-- Conditional rendering of field based on validation -->
+            {% if field.errors %}
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" class="form-control is-invalid" id="{{ field.id_for_label }}" {% if field.field.required %}required{% endif %}>
+                <div class="invalid-feedback">
+                    {{ field.errors|first }}
+                </div>
+            {% else %}
+                <!-- Input field with default styling -->
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" class="form-control" id="{{ field.id_for_label }}" {% if field.field.required %}required{% endif %}>
+            {% endif %}
+
+            <!-- Help text if provided for the field -->
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Submit and Cancel buttons -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
     </form>
 </div>
+
 {% endblock %}

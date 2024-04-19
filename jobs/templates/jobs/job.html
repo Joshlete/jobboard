@@ -1,16 +1,43 @@
-{% extends 'main.html' %} {% block content %}
+{% extends 'main.html' %} 
+{% block content %}
 
-<div class="job">
-    <h1>{{job.title}}</h1>
-    <h2>{{job.company}}</h2>
-    <h3>{{job.location}}</h3>
-    <p>{{job.description}}</p>
-    <p>Deadline: {{job.deadline}}</p>
-    {% if not has_applied %}
-    <a href="{% url 'register-job' job.id %}">Apply</a>
-    {% else %}
-    <b>Applied</b>
-    {% endif %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Job Title -->
+            <h1 class="mb-3">{{ job.title }}</h1>
+            <h6 class="text-secondary">Job Details</h6>
+            <hr>
+
+            <!-- Company and Location -->
+            <p><strong>Company:</strong> {{ job.company }}</p>
+            <p><strong>Job Location:</strong> {{ job.location }}</p>
+            
+            <!-- Created At -->
+            <p><strong>Created:</strong> {{ job.created_at|date:"m/d/Y" }}</p>
+
+            <!-- Deadline -->
+            <p><strong>Deadline:</strong> {% if job.available %}{{ job.deadline|date:"m/d/Y" }}{% else %}Closed{% endif %}</p>
+
+            <!-- Job Description -->
+            <div class="mt-4">
+                <h6 class="text-secondary">Description</h6>
+                <hr>
+                <p>{{ job.description }}</p>
+            </div>
+
+            <!-- Apply or Applied Status -->
+            <div class="mt-4">
+                {% if not job.available %}
+                    <p class="text-muted">This job is no longer accepting applications.</p>
+                {% elif not has_applied %}
+                    <a href="{% url 'register-job' job.id %}" class="btn btn-primary">Apply</a>
+                {% else %}
+                    <span class="text-success"><strong>Applied</strong></span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

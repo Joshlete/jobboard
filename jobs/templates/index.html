@@ -1,39 +1,56 @@
-{% extends 'main.html' %} {% block content %}
+{% extends 'main.html' %} 
+{% block content %}
 
-<!-- display jobs -->
 <div class="container mt-5">
-    <div class="row">
-        {% for job in jobs %}
-        <div class="col-md-4 mb-4 d-flex align-items-stretch">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title text-center">
-                        <a href="{% url 'job' job.id %}" style="color: orange; text-decoration: none">
-                            {{ job.title }}
-                        </a>
-                    </h5>
-                    <h6 class="card-subtitle mb-2 text-muted bi bi-building text-center">
-                        {{ job.company }}
-                    </h6>
+  <div class="row">
+    {% for job in jobs %}
+    <div class="col-md-4 d-flex mb-4">
+      <div class="card w-100">
+        <div class="card-body d-flex flex-column">
 
-                    {% if job.available %}
-                    <p><i class="bi bi-door-open"></i> <span class="text-blue">Open</span></p>                    
-                    {% else %}
-                    <p><i class="bi bi-door-closed"></i> <span class="text-blue">Closed</span></p>                    
-                    {% endif %}
+          <!-- Job title, centered text -->
+          <h5 class="card-title text-center">
+            <a href="{% url 'job' job.id %}" class="stretched-link text-decoration-none" style="color: orange;">
+              {{ job.title }}
+            </a>
+          </h5>
 
-                    <p><i class="bi bi-geo-alt"></i> <span class="text-blue">{{ job.location }}</span></p>
-                    <p><i class="bi bi-calendar"></i> <span class="text-blue"> Posted {{ job.created_at|date:"F d, Y" }} </span></p>
-                    <p class="card-text">
-                        {{ job.description|truncatechars:150 }}
-                    </p>
-                    <a href="{% url 'job' job.id %}" class="btn btn-primary">Read More</a>
-                </div>
-                
-            </div>
+          <!-- Company name -->
+          <h6 class="card-subtitle mb-2 text-muted text-center">
+            <i class="bi bi-building"></i> {{ job.company }}
+          </h6>
+
+          <!-- job status badge -->
+          <p class="mt-auto">
+            <span class="badge {{ job.available|yesno:'bg-success,bg-danger' }}">
+              <i class="bi {{ job.available|yesno:'bi-door-open,bi-door-closed' }}"></i> {{ job.available|yesno:'Open,Closed' }}
+            </span>
+          </p>
+
+          <!-- Job location -->
+          <p>
+            <i class="bi bi-geo-alt"></i> <span class="card-blue-detail">{{ job.location }}</span>
+          </p>
+
+          <!-- Job posting date -->
+          <p>
+            <i class="bi bi-calendar"></i> <span class="card-blue-detail">Posted {{ job.created_at|date:"F d, Y" }}</span>
+          </p>
+
+          <!-- Short job description -->
+          <p class="card-text">
+            {{ job.description|truncatechars:150 }}
+          </p>
+
+          <!-- Read More button -->
+          <div class="text-center mt-3">
+            <a href="{% url 'job' job.id %}" class="btn btn-primary">Read More</a>
+          </div>
         </div>
-        {% endfor %}
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}

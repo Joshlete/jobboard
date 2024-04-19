@@ -2,16 +2,20 @@
 .job-title-link {
     color: orange;
     text-decoration: none;
-  }
-  
-  /* Bootstrap already centers text for .text-center, no additional CSS needed */
-  
-  /* Status text color and icon */
-  .status-text {
+}
+
+/* Bootstrap already centers text for .text-center, no additional CSS needed */
+
+/* Status text color and icon */
+.status-text {
     display: inline-flex;
     align-items: center;
-  }
-  
-  .text-blue {
+}
+
+.text-blue {
     color: #31a5f8; /* Or any color you want for open status */
-  }
+}
+
+.card-blue-detail  {
+    color: #31a5f8; /* Or any color you want for open status */
+}

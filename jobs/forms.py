@@ -14,7 +14,6 @@ class JobForm(ModelForm):
             "description",
             "location",
             "deadline",
-            "available",
         ]
         widgets = {
             "deadline": forms.DateInput(attrs={"type": "date"}),
