@@ -1,19 +1,39 @@
 {% extends 'main.html' %} {% block content %}
 
 <!-- display jobs -->
-<div>
-    <ul>
-        <h2>Jobs</h2>
+<div class="container mt-5">
+    <div class="row">
         {% for job in jobs %}
-        <div>
-            <h5>
-                {{job.id}} --
-                <a href="{% url 'job' job.id %}">{{job.title}}</a> -
-                {{job.description}}
-            </h5>
+        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        <a href="{% url 'job' job.id %}" style="color: orange; text-decoration: none">
+                            {{ job.title }}
+                        </a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted bi bi-building text-center">
+                        {{ job.company }}
+                    </h6>
+
+                    {% if job.available %}
+                    <p><i class="bi bi-door-open"></i> <span class="text-blue">Open</span></p>                    
+                    {% else %}
+                    <p><i class="bi bi-door-closed"></i> <span class="text-blue">Closed</span></p>                    
+                    {% endif %}
+
+                    <p><i class="bi bi-geo-alt"></i> <span class="text-blue">{{ job.location }}</span></p>
+                    <p><i class="bi bi-calendar"></i> <span class="text-blue"> Posted {{ job.created_at|date:"F d, Y" }} </span></p>
+                    <p class="card-text">
+                        {{ job.description|truncatechars:150 }}
+                    </p>
+                    <a href="{% url 'job' job.id %}" class="btn btn-primary">Read More</a>
+                </div>
+                
+            </div>
         </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 
 {% endblock %}
