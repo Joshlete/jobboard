@@ -1,10 +1,21 @@
-{% extends 'main.html' %} {% block content %}
+{% extends 'main.html' %}
+{% block content %}
 
-<form method="POST" action="">
-    {% csrf_token %}
-    <h2>Are you sure you want to delete {{job.title}}?</h2>
-    <button type="submit">Delete</button>
-    <button type="button" onclick="window.history.back()">Cancel</button>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <form method="POST" action="">
+        {% csrf_token %}
+        <!-- Confirmation message -->
+        <h2 class="card-title">Delete Job Confirmation</h2>
+        <p class="card-text">Are you sure you want to delete "{{ job.title }}"? This action cannot be undone.</p>
+        
+        <!-- Action buttons -->
+        <button type="submit" class="btn btn-danger me-2">Delete</button>
+        <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-    {% endblock %}
-</form>
+{% endblock %}

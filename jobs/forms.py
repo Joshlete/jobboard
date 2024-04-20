@@ -1,7 +1,5 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Job
-from django.forms import ModelForm
 from .models import Job, JobApplication
 
 

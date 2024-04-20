@@ -1,32 +1,36 @@
-{% extends 'main.html' %} {% block content %}
-<div>
+{% extends 'main.html' %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Display messages if any -->
     {% if messages %}
-    <ul>
+    <div class="alert alert-dismissible alert-secondary">
         {% for message in messages %}
-        <li>{{ message }}</li>
+        <p>{{ message }}</p>
         {% endfor %}
-    </ul>
+    </div>
     {% endif %}
 
-
-    <form method="POST" action="">
+    <!-- Login form -->
+    <form method="POST" action="" class="needs-validation" novalidate>
         {% csrf_token %}
 
-        <ul style="list-style-type: none;">
-            <li>
-                <label>Username:</label>
-                <input type="text" name="username" placeholder="Enter Username" required/>
-            </li>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" class="form-control {% if form.username.errors %}is-invalid{% endif %}" id="username" name="username" placeholder="Enter Username" required />
+            {% for error in form.username.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        </div>
 
-            <li>
-                <label>Password:</label>
-                <input type="password" name="password" placeholder="Enter Password" required/>
-            </li>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" id="password" name="password" placeholder="Enter Password" required />
+            {% for error in form.password.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        </div>
 
-            <input type="submit" value="Login" />
-        </ul>
-
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
-
 {% endblock %}

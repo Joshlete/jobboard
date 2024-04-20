@@ -4,8 +4,6 @@
     text-decoration: none;
 }
 
-/* Bootstrap already centers text for .text-center, no additional CSS needed */
-
 /* Status text color and icon */
 .status-text {
     display: inline-flex;

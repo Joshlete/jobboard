@@ -2,21 +2,18 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from login.forms import UserLoginForm
 
 
 def loginUser(request):
+    # redirect to the index page if the user is already logged in
+    if request.user.is_authenticated:
+        return redirect("index")
+    
     if request.method == "POST":
         # Get the username and password from the request's POST data
         username = request.POST.get("username")
         password = request.POST.get("password")
-
-        try:
-            # Check if the username exists in the User model
-            user = User.objects.get(username=username)
-        except:
-            # If the username does not exist, display an error message and redirect to the login page
-            messages.error(request, "Username does not exist")
-            return redirect("login")
 
         # Authenticate the user with the provided username and password
         user = authenticate(request, username=username, password=password)
@@ -24,10 +21,12 @@ def loginUser(request):
             # If the user is authenticated, log them in and redirect to the index page
             login(request, user)
             return redirect("index")
+        else:
+            # If the authentication fails, display an error message
+            messages.error(request, "Username or password is incorrect")
+            return redirect("login")
 
-    # If the request method is not POST or the authentication fails, render the login page
-    context = {}
-    return render(request, "login/login.html", context)
+    return render(request, "login/login.html")
 
 
 def logoutUser(request):
