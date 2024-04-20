@@ -23,8 +23,8 @@ class Job(models.Model):
 class JobApplication(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    email = models.EmailField(null=True, blank=True)
-    resume = models.TextField(null=True, blank=True)
+    email = models.EmailField(null=True)
+    resume = models.TextField(null=True)
     cover_letter = models.TextField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

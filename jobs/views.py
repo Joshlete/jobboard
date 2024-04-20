@@ -97,7 +97,7 @@ def jobApplication(request, pk):
             job_application.user = request.user
             job_application.save()
             return redirect("index")
-    context = {"form": form}
+    context = {"form": form, "job": job}
     return render(request, "applications/application-form.html", context)
 
 

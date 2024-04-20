@@ -23,4 +23,9 @@ class JobForm(ModelForm):
 class ApplicationForm(ModelForm):
     class Meta:
         model = JobApplication
-        fields = ["job", "email", "resume", "cover_letter"]
+        fields = ["email", "resume", "cover_letter"]
+        widgets = {
+            "resume": forms.Textarea(attrs={"rows": 4}),
+            "cover_letter": forms.Textarea(attrs={"rows": 4}),
+            
+        }
