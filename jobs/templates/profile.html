@@ -1,27 +1,45 @@
-{% extends 'main.html' %} {% block content %}
+{% extends 'main.html' %}
+{% block content %}
 
-<h1>Profile</h1>
-<p>Username: {{ user.username }}</p>
+<div class="container mt-5">
+  <!-- Profile Section -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h1 class="card-title">Profile</h1>
+      <p class="card-text">Username: {{ user.username }}</p>
+    </div>
+  </div>
 
-<!-- display all jobs -->
-<h2>Jobs</h2>
-{% for job in jobs %}
-<div>
-    <h5>
-        {{job.title}} --
-        <a href="{% url 'update-job' job.id %}">Edit</a>
-        <a href="{% url 'delete-job' job.id %}">Delete</a>
-    </h5>
+  <!-- Jobs Section -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h2 class="card-title">Jobs</h2>
+      {% for job in jobs %}
+      <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+        <span>{{ job.title }}</span>
+        <div>
+          <a href="{% url 'update-job' job.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+          <a href="{% url 'delete-job' job.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Applications Section -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h2 class="card-title">Applications</h2>
+      {% for application in applications %}
+      <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+        <span>{{ application.job.title }}</span>
+        <div>
+          <a href="{% url 'update-application' application.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
-{% endfor %}
 
-<!-- display all applications -->
-<h2>Applications</h2>
-{% for application in applications %}
-<div>
-    <h5>
-        {{application.job.title}} --
-        <a href="{% url 'update-application' application.id %}">Edit</a>
-    </h5>
-</div>
-{% endfor %} {% endblock %}
+{% endblock %}
