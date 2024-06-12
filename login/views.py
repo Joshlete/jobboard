@@ -18,9 +18,9 @@ def loginUser(request):
         # Authenticate the user with the provided username and password
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            # If the user is authenticated, log them in and redirect to the index page
+            # If the user is authenticated, log them in and redirect to the last page they were on
             login(request, user)
-            return redirect("index")
+            return redirect(request.GET.get('next', 'index'))
         else:
             # If the authentication fails, display an error message
             messages.error(request, "Username or password is incorrect")

@@ -27,10 +27,14 @@
             </div>
 
             <!-- Apply or Applied Status -->
+             {% comment %} check if user logged in {% endcomment %}
+
             <div class="mt-4">
                 {% if not job.available %}
                     <p class="text-muted">This job is no longer accepting applications.</p>
-                {% elif not has_applied %}
+                {% elif not user.is_authenticated %}
+                    <a href="{% url 'login' %}" class="btn btn-primary">Login to Apply</a>
+                {% elif not has_applied  %}
                     <a href="{% url 'register-job' job.id %}" class="btn btn-primary">Apply</a>
                 {% else %}
                     <span class="text-success"><strong>Applied</strong></span>

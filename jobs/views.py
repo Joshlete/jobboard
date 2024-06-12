@@ -27,6 +27,10 @@ def profile(request):
 
 def job(request, pk):
     job = Job.objects.get(id=pk)
+    
+    # check if user exists
+    if not request.user.is_authenticated:
+        return render(request, "jobs/job.html", {"job": job})
 
     # check if user has applied to the job
     has_applied = JobApplication.objects.filter(job=job, user=request.user).exists()
